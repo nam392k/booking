@@ -1,8 +1,7 @@
 version: "2.0"
 intents:
   - thank
-  - greet:
-      use_entities: true
+  - greet
   - goodbye
   - ask_address
   - ask_worktime
@@ -15,42 +14,23 @@ intents:
   - ask_timetodo
   - ask_func_list
   - ask_name
-  - request_schedule:
-      use_entities: true
-  - inform:
-      use_entities: true
-  - chitchat:
-      use_entities: true
-  - affirm:
-      use_entities: true
-  - deny:
-      use_entities: true
-  - stop:
-      use_entities: true
-  - thankyou:
-      use_entities: true
-  - bot_challenge:
-      use_entities: true
-  - day_booking:
-      use_entities: true
-  - book_intent:
-      use_entities: true
-  - give_service:
-      use_entities: true
-  - give_dentist:
-      use_entities: true
-  - give_time:
-      use_entities: true
-  - get_name:
-      use_entities: true
-  - get_phone:
-      use_entities: true
-  - get_time:
-      use_entities: true
-  - get_email:
-      use_entities: true
-  - get_gender:
-      use_entities: true
+  - request_schedule
+  - stop
+  - thankyou
+  - day_booking
+  - book_intent
+  - give_service
+  - give_dentist
+  - give_time
+  - get_name
+  - get_phone
+  - get_email
+  - get_gender
+  - get_note
+  - chitchat
+  - affirm
+  - deny
+  - book_note
 
 entities:
   - service
@@ -58,22 +38,15 @@ entities:
   - doctor  
   - price
   - timetodo
-  - service_booked
   - dentist
-  - dentist_booked
   - date
-  - date_booked
   - time
-  - time_booked
   - customer
-  - customer_booked
   - phone
-  - phone_booked
   - book_check
   - email
-  - email_booked
   - note
-  - note_booked
+  - note_check
 
 slots:
   gender:
@@ -86,17 +59,7 @@ slots:
     initial_value: null
     auto_fill: true
     influence_conversation: false
-  service_booked:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: null
-    auto_fill: true
-    influence_conversation: false
   dentist:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: null
-    auto_fill: true
-    influence_conversation: false
-  dentist_booked:
     type: rasa.shared.core.slots.TextSlot
     initial_value: null
     auto_fill: true
@@ -106,17 +69,7 @@ slots:
     initial_value: null
     auto_fill: true
     influence_conversation: false
-  customer_booked:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: null
-    auto_fill: true
-    influence_conversation: false
   phone:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: null
-    auto_fill: true
-    influence_conversation: false
-  phone_booked:
     type: rasa.shared.core.slots.TextSlot
     initial_value: null
     auto_fill: true
@@ -126,17 +79,7 @@ slots:
     initial_value: null
     auto_fill: true
     influence_conversation: false
-  email_booked:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: null
-    auto_fill: true
-    influence_conversation: false
   note:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: null
-    auto_fill: true
-    influence_conversation: false
-  note_booked:
     type: rasa.shared.core.slots.TextSlot
     initial_value: null
     auto_fill: true
@@ -146,17 +89,7 @@ slots:
     initial_value: null
     auto_fill: true
     influence_conversation: false
-  date_booked:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: null
-    auto_fill: true
-    influence_conversation: false
   time:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: null
-    auto_fill: true
-    influence_conversation: false
-  time_booked:
     type: rasa.shared.core.slots.TextSlot
     initial_value: null
     auto_fill: true
@@ -183,7 +116,10 @@ slots:
     type: text
     influence_conversation: false
     auto_fill: true
-
+  note_check:
+    type: text
+    influence_conversation: false
+    auto_fill: true
 responses:
   utter_ask_service:
   - text: "{gender} Vui lòng chọn dịch vụ muốn khám!"
@@ -193,19 +129,17 @@ responses:
   - text: "{gender} muốn chọn nha sĩ nào ạ!"
   utter_ask_customer:
   - text: Vui lòng cho em xin họ tên!
-  - text: "{gender} vui lòng cho em xin tên ạ"
+  - text: "{gender} vui lòng cho em xin họ tên ạ"
   utter_ask_phone:
   - text: "Số điện thoại của {gender} là?"
-  - text: "{gender} vui lòng cho em xin họ tên ạ!"
+  - text: "{gender} vui lòng cho em xin số điện thoại ạ!"
   utter_ask_email:
   - text: Vui lòng nhập email
   - text: "{gender} cho em xin địa chỉ email ạ"
   utter_ask_date:
-  - text: "Cho em hỏi {gender} muốn chọn ngày nào ạ?"
-  - text: "{gender} vui lòng chọn ngày khám:"
-  utter_ask_note:
-  - text: "Cho em hỏi {gender} có thêm lưu ý gì không ạ?"
-  - text: "{gender} có thêm lưu ý gì cho buổi khám không ạ?"
+  - text: |-
+      Cho em hỏi {gender} muốn chọn ngày nào ạ?
+      Vui lòng nhập Ngày/Tháng/Năm
   utter_submit:
   - text: "Hoàn tất, hẹn gặp lại {gender}!"
   utter_slots_values:
@@ -224,7 +158,7 @@ responses:
   utter_chitchat:
     - text: chitchat
   utter_ask_continue:
-    - text: Anh/Chị có muốn tiếp tục?
+    - text: "{gender} có muốn tiếp tục không ạ?"
   utter_wrong_service:
     - text: Phòng khám chưa có dịch vụ vừa rồi, anh chị vui lòng thử lại
   utter_wrong_dentist:
@@ -258,7 +192,8 @@ actions:
 - action_ask_dentist
 - action_ask_time
 - action_service_dential
-
+# - validate_booking_form
+- action_ask_note
 forms:
   booking_form:
     required_slots:
@@ -286,11 +221,3 @@ forms:
       note:
       - entity: note
         type: from_entity
-
-e2e_actions: []
-
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
-config:
-  store_entities_as_slots: true

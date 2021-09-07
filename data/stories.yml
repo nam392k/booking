@@ -85,7 +85,6 @@ stories:
       - intent: goodbye
       - action: utter_goodbye
 
-
   - story: "5"
     steps:
       - intent: greet
@@ -107,3 +106,127 @@ stories:
       - intent: goodbye
       - action: utter_goodbye
 
+  - story: stop form + continue
+    steps:
+      - intent: request_schedule
+      - action: booking_form
+      - active_loop: booking_form
+      - intent: stop
+      - action: utter_ask_continue
+      - intent: affirm
+      - action: booking_form
+      - active_loop: null
+      - action: action_submit_form
+      - intent: book_intent
+      - action: action_insert_val_form
+
+  - story: stop form + stop
+    steps:
+      - intent: request_schedule
+      - action: booking_form
+      - active_loop: booking_form
+      - intent: stop
+      - action: utter_ask_continue
+      - intent: deny
+      - action: utter_goodbye
+      - action: action_deactivate_loop
+      - active_loop: null
+
+
+
+  # - story: interactive_story_1
+  #   steps:
+  #     - intent: greet
+  #     - action: rep_greet
+  #     - intent: get_gender
+  #       entities:
+  #       - gender: Anh
+  #     - slot_was_set:
+  #       - gender: Anh
+  #     - action: rep_get_gender
+  #     - intent: request_schedule
+  #     - action: booking_form
+  #     - active_loop: booking_form
+  #     - slot_was_set:
+  #       - requested_slot: service
+  #     - slot_was_set:
+  #       - service: Nhổ răng
+  #     - slot_was_set:
+  #       - service: Nhổ răng
+  #     - slot_was_set:
+  #       - requested_slot: dentist
+  #     - slot_was_set:
+  #       - dentist: Đoàn Huy
+  #     - slot_was_set:
+  #       - dentist: Đoàn Huy
+  #     - slot_was_set:
+  #       - requested_slot: customer
+  #     - intent: stop
+  #     - action: utter_ask_continue
+  #     - intent: affirm
+  #       entities:
+  #       - affirm: có
+  #     - action: booking_form
+  #     - slot_was_set:
+  #       - requested_slot: customer
+  #     - slot_was_set:
+  #       - customer: nam
+  #     - slot_was_set:
+  #       - customer: nam
+  #     - slot_was_set:
+  #       - requested_slot: phone
+  #     - slot_was_set:
+  #       - phone: '028523958239'
+  #     - slot_was_set:
+  #       - phone: '028523958239'
+  #     - slot_was_set:
+  #       - requested_slot: email
+  #     - slot_was_set:
+  #       - email: nh@dd.com
+  #     - slot_was_set:
+  #       - email: nh@dd.com
+  #     - slot_was_set:
+  #       - requested_slot: date
+  #     - slot_was_set:
+  #       - date: 3/9/2021
+  #     - slot_was_set:
+  #       - date: 3/9/2021
+  #     - slot_was_set:
+  #       - requested_slot: time
+  #     - slot_was_set:
+  #       - time: 9:00 - 10:00
+  #     - slot_was_set:
+  #       - time: 9:00 - 10:00
+  #     - slot_was_set:
+  #       - requested_slot: note
+  #     - slot_was_set:
+  #       - note: không
+  #     - slot_was_set:
+  #       - note: không
+  #     - slot_was_set:
+  #       - requested_slot: null
+  #     - active_loop: null
+  #     - action: save_info_book
+  #     - slot_was_set:
+  #       - service_booked: Nhổ răng
+  #     - slot_was_set:
+  #       - dentist_booked: Đoàn Huy
+  #     - slot_was_set:
+  #       - customer_booked: nam
+  #     - slot_was_set:
+  #       - phone_booked: '028523958239'
+  #     - slot_was_set:
+  #       - email_booked: nh@dd.com
+  #     - slot_was_set:
+  #       - date_booked: 3/9/2021
+  #     - slot_was_set:
+  #       - time_booked: 9:00 - 10:00
+  #     - slot_was_set:
+  #       - note_booked: không
+  #     - action: action_submit_form
+  #     - intent: book_intent
+  #       entities:
+  #       - book_check: Đồng ý đặt lịch
+  #     - slot_was_set:
+  #       - book_check: Đồng ý đặt lịch
+  #     - action: action_insert_val_form

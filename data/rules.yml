@@ -7,17 +7,24 @@ rules:
     - action: booking_form
     - active_loop: booking_form
 
-
 - rule: submit form
   condition:
   - active_loop: booking_form
   steps:
     - action: booking_form
     - active_loop: null
-    - action: save_info_book
     - action: action_submit_form
     - intent: book_intent
     - action: action_insert_val_form
+
+- rule: Example of an unhappy path
+  condition:
+  - active_loop: booking_form
+  steps:
+  - intent: chitchat
+  - action: utter_chitchat
+  - action: booking_form
+  - active_loop: booking_form
 
 - rule: Goodbye
   steps:

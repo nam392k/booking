@@ -6,6 +6,67 @@ from rasa_sdk.events import SlotSet, EventType, FollowupAction
 import numpy as np
 import requests
 from datetime import datetime
+from typing import Text, List, Any, Dict
+from rasa_sdk import Tracker, FormValidationAction
+from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.types import DomainDict
+
+# class ValidateBookingForm(FormValidationAction):
+#     def name(self) -> Text:
+#         return "validate_booking_form"
+#     # def validate_time(
+#     #     self,
+#     #     slot_value: Any,
+#     #     dispatcher: CollectingDispatcher,
+#     #     tracker: Tracker,
+#     #     domain: DomainDict,
+#     # ) -> Dict[Text, Any]:
+#     #     dentist = tracker.get_slot("dentist")
+#     #     gender = tracker.get_slot("gender")
+#     #     time = tracker.get_slot("time")
+#     #     # layIDnhasi
+#     #     response = requests.get("http://localhost:8080/api/get-all-doctors")
+#     #     data = response.json()
+#     #     for x in data['data']:
+#     #         if (x['firstName'] == dentist):
+#     #             idDentist = x['id']
+#     #     print(idDentist)
+#     #     # convert ngay
+#     #     date = tracker.get_slot("date")
+#     #     date_object = datetime.strptime(date, "%d/%m/%Y")
+#     #     print("date_object =", date_object)
+
+#     #     timestamp = datetime.timestamp(date_object)
+#     #     dateChanged = str(timestamp).replace(".0", "") + '000'
+#     #     print(dateChanged)
+#     #     api = 'http://localhost:8080/api/get-schedule-doctor-by-date?doctorId=' + str(idDentist) + '&date=' + dateChanged
+#     #     response2 = requests.get(api)
+#     #     data2 = response2.json()
+#     #     print(data2)
+#     #     for x in data2['data']:
+#     #         if (x['timeTypeData']['valueVi'] == time):
+#     #             if (x['currentNumber'] == None):
+#     #                 print(x['currentNumber'])
+#     #                 return {"time": slot_value}
+#     #             else:
+#     #                 # validation failed, set this slot to None so that the
+#     #                 # user will be asked for the slot again
+#     #                 print(x['currentNumber'])
+#     #                 dispatcher.utter_message('Khung giờ ' + gender + ' vừa chọn đã có người đặt!')
+#     #                 dispatcher.utter_message('Vui lòng chọn khung giờ khác')
+#     #                 return {"time": None}
+    # def validate_note(
+    #     self,
+    #     slot_value: Any,
+    #     dispatcher: CollectingDispatcher,
+    #     tracker: Tracker,
+    #     domain: DomainDict,
+    # ) -> Dict[Text, Any]:
+    #     if(tracker.get_slot("note")=="Không"):
+    #         return {"note": slot_value}
+    #     else: 
+    #         dispatcher.utter_message('Vui lòng nhập lưu ý cho buổi khám')
+    #         return {"note": None}
 
 class booking_form(Action):
 
@@ -14,30 +75,6 @@ class booking_form(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[EventType]:
         required_slots = ["service", "dentist", "customer", "phone", "email", "date", "time", "note"]
-
-
-class SaveInfoBook(Action):
-    def name(self) -> Text:
-        return "save_info_book"
-
-    def run(self, dispatcher, tracker: Tracker,
-            domain: Dict):
-        service = tracker.get_slot("service")
-        dentist = tracker.get_slot("dentist")
-        customer = tracker.get_slot("customer")
-        phone = tracker.get_slot("phone")
-        email = tracker.get_slot("email")
-        date = tracker.get_slot("date")
-        time = tracker.get_slot("time")
-        note = tracker.get_slot("note")
-        return [SlotSet("service_booked", service),
-                SlotSet("dentist_booked", dentist),
-                SlotSet("customer_booked", customer),
-                SlotSet("phone_booked", phone),
-                SlotSet("email_booked", email),
-                SlotSet("date_booked", date),
-                SlotSet("time_booked", time),
-                SlotSet("note_booked", note)]
 
 
 class submit_form_booking(Action):
@@ -52,30 +89,6 @@ class submit_form_booking(Action):
             phone_book=tracker.get_slot("phone"), email_book=tracker.get_slot("email"),
             date_book=tracker.get_slot("date"), time_book=tracker.get_slot("time"), note_book=tracker.get_slot("note")
         )
-        # # layIDnhasi
-        # gender = tracker.get_slot("gender")
-        # dentist = tracker.get_slot("dentist")
-        # response = requests.get("http://localhost:8080/api/get-all-doctors")
-        # data = response.json()
-        # for x in data['data']:
-        #     if (x['firstName'] == dentist):
-        #         idDentist = x['id']
-        # print(idDentist)
-
-        # date = tracker.get_slot("date")
-        # date_object = datetime.strptime(date, "%d/%m/%Y")
-        # print("date_object =", date_object)
-
-        # timestamp = datetime.timestamp(date_object)
-        # dateChanged = str(timestamp).replace(".0", "") + '000'
-        # print(dateChanged)
-        # ##call api 
-        # api = 'http://localhost:8080/api/get-schedule-doctor-by-date?doctorId=' + str(idDentist) + '&date=' + dateChanged
-        # response2 = requests.get(api)
-        # data2 = response2.json()
-        # arr = []  # listtime
-        # for x in data2['data']:
-        #     if (x['currentNumber'] != 1):
         select = ["Đồng ý đặt lịch", "Bỏ đặt lịch"]
         button = []
         for x in select:
@@ -83,23 +96,6 @@ class submit_form_booking(Action):
                 {"title": x, "payload": '/book_intent{\"book_check\": \"' + x + '\"}'})
 
         dispatcher.utter_button_message(" ", button)
-            # elif (x['currentNumber'] == 1):
-            #     api = 'http://localhost:8080/api/get-schedule-doctor-by-date?doctorId=' + str(idDentist) + '&date=' + dateChanged
-            #     response2 = requests.get(api)
-            #     data2 = response2.json()
-            #     arr = []  # listtime
-            #     for x in data2['data']:
-            #         if (x['currentNumber'] != 1):
-            #             arr.append(x['timeTypeData']['valueVi'])
-            #     print(arr)
-            #     dispatcher.utter_message(text='Xin ' + gender + ' hãy chọn thời gian đến khám bệnh:')
-            #     button = []
-            #     for x in arr:
-            #         button.append(
-            #             {"title": x, "payload": '/give_time{\"time\": \"' + x + '\"}'})
-            #     dispatcher.utter_button_message(" ", button)
-                
-
         return []
 
 
@@ -153,9 +149,8 @@ class insert_form_booking(Action):
             print(idDentist)
             # timeChanged
             time = tracker.get_slot("time")
-            if (time == '7:00 - 8:00'):
-                timeChanged = 'T1'
-            elif (time == '8:00 - 9:00'):
+            timeChanged = 'T1'
+            if (time == '8:00 - 9:00'):
                 timeChanged = 'T2'
             elif (time == '9:00 - 10:00'):
                 timeChanged = 'T3'
@@ -170,110 +165,24 @@ class insert_form_booking(Action):
             elif (time == '16:00 - 17:00'):
                 timeChanged = 'T8'
             print(timeChanged)
+            #apipost
+            user = {"doctorId": idDentist, "timeType": timeChanged, "date": dateChanged, "email": email, "fullName": customer, "gender": genderChanged, "service": idService, "phoneNumber": phone, "note": note}
+            response = requests.post("http://localhost:8080/api/patient-book-appointment", data = user)
+            # print (str(response.content)) == response.text
+            user2 = {"doctorId": idDentist, "date": dateChanged, "timeType": timeChanged}
+            res = response.json()
+            if (res['errCode'] == 0):
+                dispatcher.utter_message("Đặt lịch thành công")
+                response2 = requests.post("http://localhost:8080/api/update-slot-schedule", data = user2)
 
-
-            api = 'http://localhost:8080/api/get-schedule-doctor-by-date?doctorId=' + str(idDentist) + '&date=' + dateChanged
-            response2 = requests.get(api)
-            data2 = response2.json()
-            for x in data2['data']:
-                if (x['currentNumber'] != 1):
-                    # apipost
-                    user = {"doctorId": idDentist, "fullName": customer, "phoneNumber": phone, "timeType": timeChanged,
-                            "date": dateChanged, "email": email, "gender": genderChanged, "service": idService, "note": note}
-                    response = requests.post("http://localhost:8080/api/patient-book-appointment", data=user)
-                    # print (str(response.content)) == response.text
-                    user2 = {"doctorId": idDentist, "timeType": timeChanged, "date": dateChanged}
-                    res = response.json()
-                    if (res['errCode'] == 0):
-                        dispatcher.utter_message(gender + customer + ' đã đặt lịch thành công.')
-                        dispatcher.utter_message('Hẹn gặp lại '+ gender + ' tại nha khoa Smile.')
-                        response2 = requests.post("http://localhost:8080/api/update-slot-schedule", data=user2)
-                        return [SlotSet("service", None),
-                                SlotSet("dentist", None),
-                                SlotSet("customer", None),
-                                SlotSet("phone", None),
-                                SlotSet("email", None),
-                                SlotSet("date", None),
-                                SlotSet("time", None),
-                                SlotSet("note", None),
-                                SlotSet("book_check", None),
-                                ]
-                    elif (res['errCode'] == 1):
-                        dispatcher.utter_message('Đã xảy ra sự cố, Quý khách vui lòng đặt lịch lại')
-                elif (x['currentNumber'] == 1):
-                    SlotSet("time", None)
-                    api3 = 'http://localhost:8080/api/get-schedule-doctor-by-date?doctorId=' + str(idDentist) + '&date=' + dateChanged
-                    response3 = requests.get(api3)
-                    data3 = response3.json()
-                    arr2 = []  # listtime
-                    for x in data3['data']:
-                        if (x['currentNumber'] != 1):
-                            arr2.append(x['timeTypeData']['valueVi'])
-                    print(arr2)
-                    dispatcher.utter_message('Khung giờ ' + gender + ' chọn đã có người đặt!')
-                    dispatcher.utter_message(gender + ' vui lòng chọn khung giờ khác:')
-                    button = []
-                    for x in arr2:
-                        button.append(
-                            {"title": x, "payload": '/give_time{\"time\": \"' + x + '\"}'})
-                    dispatcher.utter_button_message(" ", button)
-
-                    time = tracker.get_slot("time")
-                    if (time == '7:00 - 8:00'):
-                        timeChanged = 'T1'
-                    elif (time == '8:00 - 9:00'):
-                        timeChanged = 'T2'
-                    elif (time == '9:00 - 10:00'):
-                        timeChanged = 'T3'
-                    elif (time == '10:00 - 11:00'):
-                        timeChanged = 'T4'
-                    elif (time == '11:00 - 12:00'):
-                        timeChanged = 'T5'
-                    elif (time == '13:00 - 14:00'):
-                        timeChanged = 'T6'
-                    elif (time == '15:00 - 16:00'):
-                        timeChanged = 'T7'
-                    elif (time == '16:00 - 17:00'):
-                        timeChanged = 'T8'
-                    print(timeChanged)
-
-                    # apipost
-                    user3 = {"doctorId": idDentist, "fullName": customer, "phoneNumber": phone, "timeType": timeChanged,
-                            "date": dateChanged, "email": email, "gender": genderChanged, "service": idService, "note": note}
-                    response3 = requests.post("http://localhost:8080/api/patient-book-appointment", data=user3)
-                    # print (str(response.content)) == response.text
-                    user4 = {"doctorId": idDentist, "timeType": timeChanged, "date": dateChanged}
-                    res = response3.json()
-                    if (res['errCode'] == 0):
-                        dispatcher.utter_message(gender + ' ' + customer + ' đã đặt lịch thành công.')
-                        dispatcher.utter_message('Hẹn gặp lại '+ gender + ' tại nha khoa Smile.')
-                        response4 = requests.post("http://localhost:8080/api/update-slot-schedule", data=user4)
-                        return [SlotSet("service", None),
-                                SlotSet("dentist", None),
-                                SlotSet("customer", None),
-                                SlotSet("phone", None),
-                                SlotSet("email", None),
-                                SlotSet("date", None),
-                                SlotSet("time", None),
-                                SlotSet("note", None),
-                                SlotSet("book_check", None),
-                                ]
-                    elif (res['errCode'] == 1):
-                        dispatcher.utter_message('Đã xảy ra sự cố, Quý khách vui lòng đặt lịch lại')
+            elif (res['errCode'] == 1):
+                dispatcher.utter_message("Đặt lịch không thành công, vui lòng đặt lại !")
+            
 
         if (book_check == "Bỏ đặt lịch"):
-            dispatcher.utter_message("Đã huỷ đặt lịch thành công")
-            dispatcher.utter_message('Hẹn gặp lại ' + gender)
-            return [SlotSet("service", None),
-                    SlotSet("dentist", None),
-                    SlotSet("customer", None),
-                    SlotSet("phone", None),
-                    SlotSet("email", None),
-                    SlotSet("date", None),
-                    SlotSet("time", None),
-                    SlotSet("note", None),
-                    SlotSet("book_check", None),
-                    ]
+            dispatcher.utter_message("Đã huỷ đặt lịch")
+
+
 
 
 class AskSlotServiceAction(Action):
@@ -298,6 +207,18 @@ class AskSlotServiceAction(Action):
                 {"title": x, "payload": '/give_service{\"service\": \"' + x + '\"}'})
         dispatcher.utter_button_message(" ", button)
         return []
+        # current_service = tracker.get_slot("service")
+        # if cancel != None:
+        #     dispatcher.utter_message("Bạn có muốn thoát không")
+        #     listcancel = ["Có", "Không"]
+        #     button = []
+        #     for x in listcancel:
+        #         button.append(
+        #             {"title": x, "payload": '/book_cancel{\"cancel\": \"' + x + '\"}'})
+        #     dispatcher.utter_button_message(" ", button)
+
+        # if(cancel=="Có"):
+        #     return action_deactivate_form
 
 
 class AskSlotDentistAction(Action):
@@ -359,7 +280,11 @@ class AskSlotTimeAction(Action):
             if (x['currentNumber'] != 1):
                 arr.append(x['timeTypeData']['valueVi'])
         print(arr)
-        dispatcher.utter_message(text="Hãy chọn thời gian đến khám bệnh:")
+        if not arr:
+            dispatcher.utter_message('Ngày vừa chọn không có khung giờ trống')
+            dispatcher.utter_message('Vui lòng chọn ngày khác!')
+        else:
+            dispatcher.utter_message('Hãy chọn thời gian đến khám bệnh:')
         button = []
         for x in arr:
             button.append(
@@ -367,6 +292,25 @@ class AskSlotTimeAction(Action):
         dispatcher.utter_button_message(" ", button)
 
         return []
+
+class AskSlotNoteAction(Action):
+    def name(self) -> Text:
+        return "action_ask_note"
+
+    def run(
+            self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict
+    ) -> List[EventType]:
+        gender = tracker.get_slot("gender")
+        dispatcher.utter_message(gender + ' có lưu ý gì không ạ')
+        dispatcher.utter_message("Nếu có lưu ý, vui lòng nhập phía dưới")
+        select2 = ["Không"]
+        button = []
+        for x in select2:
+            button.append(
+                {"title": x, "payload": '/book_note{\"note\": \"' + x + '\"}'})
+        dispatcher.utter_button_message(" ", button)
+        return []
+
 
 class Greet(Action):
 
@@ -518,7 +462,7 @@ class AskDoctor(Action):
             if (x['firstName'] == doctor):
                 id += str(x['id'])
 
-        api = 'http://localhost:8080/api/get-detail-doctor-by-id?id=' + id;
+        api = 'http://localhost:8080/api/get-detail-doctor-by-id?id=' + id
         response2 = requests.get(api)
         data2 = response2.json()
         # if(data2['data']['Markdown']['description'] == null):

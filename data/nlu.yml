@@ -7,87 +7,98 @@ nlu:
     - tôi cần đặt lịch cho dịch vụ [khám răng](service)
     - tôi muốn đặt lịch [trồng răng](service)
     - tôi muốn đặt lịch [niềng răng](service)
-- intent: affirm
-  examples: |
-    - đúng rồi
-    - ye
-    - uh yes
-    - yeah
-    - um yes
-    - yes yes
-- intent: deny
-  examples: |
-    - không
-    - tôi không muốn chọn
-    - không xác nhận
-    - không có thời gian rảnh vào lúc đó
-    - không, cảm ơn
-    - còn khung giờ khác không bot ?
-    - không phù hợp
-- intent: inform
-  examples: |
-    - tôi muốn đặt lịch [khám răng](service)
-    - tôi muốn đặt lịch [trồng răng](service)
-    - tôi muốn đặt lịch [niềng răng](service)
-    - [nhổ răng](service)
-    - [trồng răng](service)
-    - tôi muốn [trồng răng sứ](service)
-    - tôi muốn nha sĩ [Hoàng Nam](dentist)
-    - tôi muốn nha sĩ [Kỳ Anh](dentist)
-    - tôi muốn nha sĩ [Minh Huy](dentist)
-    - tôi muốn nha sĩ [Vĩnh Kỳ](dentist)
-    - tôi muốn nha sĩ [Đoàn Huy](dentist)
-    - ai cũng được
-    - ngẫu nhiên đi
-    - [khám răng](service)
-    - [ai cũng được](dentist)
-    - [Minh Huy](dentist)
-    - [Nhổ răng](service)
-    - [Hoàng Nam](dentist)
 - intent: day_booking
   examples: |
     - [12/02/2021](date)
     - [24/07/2021](date)
+    - [3/9/2021](date)
 - intent: get_name
   examples: |
     - [Khưu Nguyễn Hoàng Nam](customer)
     - [Phan Thị Huỳnh Như](customer)
     - [Nguyễn Văn Quy](customer)
     - [Lưu Tiến Đạo](customer)
-    - [Minh Tuyết](customer)
-    - [Hồng Nhung](customer)
+    - [minh tuyết](customer)
+    - [Hồng nhung](customer)
+    - [Nguyễn Văn A](customer)
+    - [Lê Thị Vân Anh](customer)
+    - [Nam](customer)
+    - [Khoa](customer)
+    - [Như Ý](customer)
+    - [Trần Công Án](customer)
+    - [trần công án](customer)
+    - [Nguyễn Thế Phi](customer)
+    - [thế phi](customer)
+    - [Đoàn Huy](customer)
+    - [nam](customer)
 - intent: get_phone
   examples: |
     - [012344567](phone)
     - [0798412647](phone)
     - [0126745388](phone)
-- intent: get_time
-  examples: |
-    - [3h](time)
-    - [3h30](time)
-    - [8h30](time)
+    - [028523958239](phone)
 - intent: get_email
   examples: |
     - [nam123@gmail.com](email)
     - [huynguyen@gmail.com](email)
     - [Test@gmail.com](email)
+    - [est@abc.com](email)
+    - [123@zyx.com](email)
+    - [nh@dd.com](email)
 - intent: get_note
   examples: |
-    - [không](note)
-    - [không có](note)
     - [khám nhanh](note)
     - [không có ghi chú](note)
     - [gì cũng được](note)
-    - [có](note)
 - intent: get_gender
   examples: |
     - [Anh](gender)
     - [Chị](gender)
-
 - intent: book_intent
   examples: |
     - Đồng ý đặt lịch
     - Bỏ đặt lịch
+- intent: chitchat
+  examples: |
+    - trồng răng có lâu không bot?
+    - tốn thời gian bao nhiêu cho việc khám răng ?
+    - nhổ răng có đau lắm không ?
+    - trồng răng sứ tốn tiền lắm nhỉ
+- intent: affirm
+  examples: |
+    - có
+    - đúng rồi
+    - ye
+    - uh
+    - yeah
+    - um yes
+    - yes
+    - đúng vậy
+    - đúng
+    - chính xác
+    - tiếp tục
+    - đặt tiếp
+    - [có](affirm)
+- intent: deny
+  examples: |
+    - không
+    - no
+    - nghỉ đặt
+    - dừng lại
+    - không đặt nữa
+- intent: stop
+  examples: |
+    - bạn không giúp gì được cho tôi
+    - thoát
+    - hủy
+    - dừng
+    - dừng lại
+    - stop
+    - hủy đặt lịch
+    - cancel
+    - tôi không muốn đặt lịch nữa
+    - dừng đặt lịch
+    - tôi muốn suy nghĩ lại
 - intent: greet
   examples: |
     - hey
@@ -120,16 +131,12 @@ nlu:
     - chào phòng khám
     - chào ad
     - mình xin chào bạn
-    - xin chào
     - xin chào phòng khám
     - chào ad nha
     - cho mình hỏi là
-    - cho tôi hỏi
-    - alo alo
     - chào bot nha
     - bot ơi
     - ad ơi cho mình hỏi
-
 - intent: goodbye
   examples: |
     - tạm biệt
@@ -141,19 +148,15 @@ nlu:
     - goodbye
     - bye bye
     - bai
-    - tạm biệt
-    - bye
     - bye bye nha
     - chào tạm biệt
     - hẹn gặp lại nha
     - gặp lại sau
     - hẹn gặp vào ngày mai
-    - goodbye
     - xin chào tạm biệt
     - tạm biệt bạn nha
     - bye ad
     - bye bot
-
 - intent: ask_address
   examples: |
     - phòng khám của mình ở đâu vậy
@@ -168,14 +171,12 @@ nlu:
     - địa chỉ chỗ mình là ở đâu
     - cho xin địa chỉ
     - địa chỉ mình ở đâu
-    - phòng khám ở đâu vậy
     - địa chỉ phòng khám có xa thành phố không
     - địa chỉ
     - ở đâu vậy
     - phòng khám ở nơi nào
     - địa chỉ nha khoa mình là gì
     - địa chỉ nha khoa mình có ở trong thành phố
-
 - intent: ask_worktime
   examples: |
     - lịch làm việc của phòng khám thế nào
@@ -193,8 +194,6 @@ nlu:
     - giờ làm việc của phòng khám như thế nào
     - giờ mở cửa của phòng khám
     - phòng khám đóng cửa vào lúc mấy giờ
-
-
 - intent: ask
   examples: |
     - tôi muốn được tư vấn
@@ -205,7 +204,6 @@ nlu:
     - có thể giúp mình tư vấn được không
     - tư vấn về dịch vụ cho mình
     - bạn có tư vấn cho mình về dịch vụ được không
-
 - intent: ask_codauko
   examples: |
     - Niềng răng có đau không?
@@ -216,7 +214,6 @@ nlu:
     - niềng răng có khó chịu không
     - nhổ răng khôn có đau lắm không ?
     - rạch dẫn lưu áp xe đau lắm hả?
-
 - intent: ask_list_doctor
   examples: |
     - Danh sách nha sĩ
@@ -231,14 +228,12 @@ nlu:
     - phòng khám mình có bao nhiêu nha sĩ làm việc
     - vào buổi chiều có bao nhiêu nha sĩ làm việc
     - danh sách các nha sĩ có mặt vào buổi chiều
-
 - intent: ask_doctor
   examples: |
     - Nha sĩ [Minh Huy, Vĩnh Kỳ, Hoàng Nam, Đoàn Huy, Kỳ Anh](doctor) là ai vậy?
     - Nha sĩ [Minh Huy, Vĩnh Kỳ, Hoàng Nam, Đoàn Huy, Kỳ Anh](doctor) như thế nào
     - Nha sĩ [Minh Huy, Vĩnh Kỳ, Hoàng Nam, Đoàn Huy, Kỳ Anh](doctor) có bằng cấp gì không?
     - Bằng cấp của nha sĩ [Minh Huy, Vĩnh Kỳ, Hoàng Nam, Đoàn Huy, Kỳ Anh](doctor) là gì?
-
 - intent: ask_service
   examples: |
     - cho tôi hỏi về dịch vụ [niềng răng](service)
@@ -277,44 +272,43 @@ nlu:
     - [nhổ răng sữa](service) là làm gì?
     - [cạo vôi răng](service) là làm gì?
     - [trám răng](service) là làm gì?
-
 - intent: ask_price
   examples: |
-    - giá [niềng răng](price) sao 
+    - giá [niềng răng](price) sao
     - giá [tẩy trắng răng](price) sao
-    - giá [nhổ răng](price) sao 
-    - giá [chữa tuỷ răng](price) sao 
-    - giá [lắp răng giả](price) sao 
-    - giá [rạch dẫn lưu áp xe](price) sao 
-    - giá [nhổ răng sữa](price) sao 
-    - giá [cạo vôi răng](price) sao 
-    - giá [trám răng](price) sao 
-    - giá của [niềng răng](price) sao 
+    - giá [nhổ răng](price) sao
+    - giá [chữa tuỷ răng](price) sao
+    - giá [lắp răng giả](price) sao
+    - giá [rạch dẫn lưu áp xe](price) sao
+    - giá [nhổ răng sữa](price) sao
+    - giá [cạo vôi răng](price) sao
+    - giá [trám răng](price) sao
+    - giá của [niềng răng](price) sao
     - giá của [tẩy trắng răng](price) sao
-    - giá của [nhổ răng](price) sao 
-    - giá của [chữa tuỷ răng](price) sao 
-    - giá của [lắp răng giả](price) sao 
-    - giá của [rạch dẫn lưu áp xe](price) sao 
-    - giá của [nhổ răng sữa](price) sao 
-    - giá của [cạo vôi răng](price) sao 
+    - giá của [nhổ răng](price) sao
+    - giá của [chữa tuỷ răng](price) sao
+    - giá của [lắp răng giả](price) sao
+    - giá của [rạch dẫn lưu áp xe](price) sao
+    - giá của [nhổ răng sữa](price) sao
+    - giá của [cạo vôi răng](price) sao
     - giá của [trám răng](price) sao
-    - giá của [niềng răng](price) 
+    - giá của [niềng răng](price)
     - giá của [tẩy trắng răng](price)
-    - giá của [nhổ răng](price) 
-    - giá của [chữa tuỷ răng](price) 
-    - giá của [lắp răng giả](price) 
-    - giá của [rạch dẫn lưu áp xe](price) 
-    - giá của [nhổ răng sữa](price) 
-    - giá của [cạo vôi răng](price) 
+    - giá của [nhổ răng](price)
+    - giá của [chữa tuỷ răng](price)
+    - giá của [lắp răng giả](price)
+    - giá của [rạch dẫn lưu áp xe](price)
+    - giá của [nhổ răng sữa](price)
+    - giá của [cạo vôi răng](price)
     - giá của [trám răng](price)
-    - [niềng răng](price) bao nhiêu 
+    - [niềng răng](price) bao nhiêu
     - [tẩy trắng răng](price) bao nhiêu
-    - [nhổ răng](price) bao nhiêu 
-    - [chữa tuỷ răng](price) bao nhiêu 
-    - [lắp răng giả](price) bao nhiêu 
-    - [rạch dẫn lưu áp xe](price) bao nhiêu 
-    - [nhổ răng sữa](price) bao nhiêu 
-    - [cạo vôi răng](price) bao nhiêu 
+    - [nhổ răng](price) bao nhiêu
+    - [chữa tuỷ răng](price) bao nhiêu
+    - [lắp răng giả](price) bao nhiêu
+    - [rạch dẫn lưu áp xe](price) bao nhiêu
+    - [nhổ răng sữa](price) bao nhiêu
+    - [cạo vôi răng](price) bao nhiêu
     - [trám răng](price) bao nhiêu
     - giá của [niềng răng](price) bao nhiêu
     - giá của [tẩy trắng răng](price) bao nhiêu
@@ -325,7 +319,6 @@ nlu:
     - giá của [nhổ răng sữa](price) bao nhiêu
     - giá của [cạo vôi răng](price) bao nhiêu
     - giá của [trám răng](price) bao nhiêu
-    
 - intent: ask_timetodo
   examples: |
     - [niềng răng](timetodo) mất khoảng bao lâu
@@ -346,15 +339,15 @@ nlu:
     - thời gian [nhổ răng sữa](timetodo) là bao lâu
     - thời gian [cạo vôi răng](timetodo) là bao lâu
     - thời gian [trám răng](timetodo) là bao lâu
-    - mất khoảng bao lâu cho việc [niềng răng](timetodo) 
-    - mất khoảng bao lâu cho việc [tẩy trắng răng](timetodo) 
-    - mất khoảng bao lâu cho việc [nhổ răng](timetodo) 
-    - mất khoảng bao lâu cho việc [chữa tuỷ răng](timetodo) 
-    - mất khoảng bao lâu cho việc [lắp răng giả](timetodo) 
-    - mất khoảng bao lâu cho việc [rạch dẫn lưu áp xe](timetodo) 
-    - mất khoảng bao lâu cho việc [nhổ răng sữa](timetodo) 
-    - mất khoảng bao lâu cho việc [cạo vôi răng](timetodo) 
-    - mất khoảng bao lâu cho việc [trám răng](timetodo) 
+    - mất khoảng bao lâu cho việc [niềng răng](timetodo)
+    - mất khoảng bao lâu cho việc [tẩy trắng răng](timetodo)
+    - mất khoảng bao lâu cho việc [nhổ răng](timetodo)
+    - mất khoảng bao lâu cho việc [chữa tuỷ răng](timetodo)
+    - mất khoảng bao lâu cho việc [lắp răng giả](timetodo)
+    - mất khoảng bao lâu cho việc [rạch dẫn lưu áp xe](timetodo)
+    - mất khoảng bao lâu cho việc [nhổ răng sữa](timetodo)
+    - mất khoảng bao lâu cho việc [cạo vôi răng](timetodo)
+    - mất khoảng bao lâu cho việc [trám răng](timetodo)
     - thời gian cho việc [niềng răng](timetodo) sẽ tốn bao lâu
     - thời gian cho việc [tẩy trắng răng](timetodo) sẽ tốn bao lâu
     - thời gian cho việc [nhổ răng](timetodo) sẽ tốn bao lâu
@@ -382,8 +375,3 @@ nlu:
     - cám ơn
     - Cám ơn ad
     - thanks
-
-
-
-
-
